@@ -1,8 +1,8 @@
-version: '3'
-
 services:
   api:
-    build: ./code/deployment/api
+    build:
+      context: .
+      dockerfile: code/deployment/api/Dockerfile
     image: credit_score_api:latest
     container_name: credit_score_api
     networks:
@@ -10,10 +10,12 @@ services:
     expose:
       - 80
     ports:
-      - "127.0.0.1:80:80"
+      - "127.0.0.1:8000:80"
   
   app:
-    build: ./code/deployment/app
+    build:
+      context: .
+      dockerfile: code/deployment/app/Dockerfile
     image: credit_score_app:latest
     container_name: credit_score_app
     networks:

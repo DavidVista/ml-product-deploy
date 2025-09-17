@@ -3,7 +3,7 @@ import requests
 
 
 # FastAPI endpoint
-FASTAPI_URL = "http://fastapi:8000/predict"
+FASTAPI_URL = "http://api:80/predict"
 
 # Streamlit app UI
 st.title("Credit Score Classifier")

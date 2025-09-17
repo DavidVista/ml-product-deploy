@@ -4,14 +4,14 @@ import pickle
 
 
 # Load the trained model
-with open("model.pkl", "rb") as f:
+with open("models/model.pkl", "rb") as f:
     model = pickle.load(f)
 
 # Load transformations
-with open("imputer.pkl", "rb") as f:
+with open("models/imputer.pkl", "rb") as f:
     imputer = pickle.load(f)
 
-with open("scaler.pkl", "rb") as f:
+with open("models/scaler.pkl", "rb") as f:
     scaler = pickle.load(f)
 
 
