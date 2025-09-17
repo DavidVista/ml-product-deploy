@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  api:
+    build: ./code/deployment/api
+    image: credit_score_api:latest
+    container_name: credit_score_api
+    networks:
+      - product_net
+    expose:
+      - 80
+    ports:
+      - "127.0.0.1:80:80"
+  
+  app:
+    build: ./code/deployment/app
+    image: credit_score_app:latest
+    container_name: credit_score_app
+    networks:
+      - product_net
+    expose:
+      - 8501
+    ports:
+      - "127.0.0.1:8501:8501"
+    depends_on:
+      - api
+
+networks:
+  product_net:
+    driver: bridge
