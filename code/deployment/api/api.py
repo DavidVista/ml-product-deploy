@@ -62,6 +62,10 @@ def predict(input_data: CreditScoreInput):
 
     data = scaler.transform(imputer.transform(data))
 
-    prediction = model.predict(data)
+    prediction = model.predict_proba(data)[0][1]
 
-    return {"prediction": int(prediction[0])}
+    threshold = 0.4982
+
+    predicted_class = 1 if prediction > threshold else 0
+
+    return {"prediction": predicted_class}

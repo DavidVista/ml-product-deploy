@@ -9,8 +9,9 @@ from sklearn.metrics._scorer import make_scorer
 import pandas as pd
 import numpy as np
 import pickle
+import matplotlib.pyplot as plt
 
-from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_auc_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_auc_score, precision_recall_curve
 
 
 def load_dataset(filename: str) -> Tuple[pd.DataFrame, pd.Series]:
@@ -121,7 +122,20 @@ def main(val=True, test=True):
     if test:
         X_test_prep = preprocess(X_test, train=False)
 
-        y_pred = model.predict(X_test_prep)
+        y_pred_proba = model.predict_proba(X_test_prep)
+
+        precision, recall, thresholds = precision_recall_curve(y_test, y_pred_proba[:, 1])
+
+        plt.plot(thresholds, precision[:-1], color='red', label='precision')
+        plt.plot(thresholds, recall[:-1], color='blue', label='recall')
+
+        plt.grid()
+        plt.legend()
+        plt.show()
+
+        best_threshold = 0.4982
+
+        y_pred = (y_pred_proba[:, 1] > best_threshold).astype(np.int32)
 
         print(
             (f"Acc.: {accuracy_score(y_test, y_pred)}, "
@@ -146,5 +160,5 @@ def test():
 
 
 if __name__ == "__main__":
-    # main(val=False)
-    test()
+    main(val=False)
+    # test()
